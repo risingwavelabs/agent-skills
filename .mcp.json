@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "risingwave": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["/path/to/risingwave-mcp/src/main.py"],
+      "env": {
+        "RISINGWAVE_CONNECTION_STR": "postgresql://root:root@localhost:4566/dev"
+      }
+    }
+  }
+}
