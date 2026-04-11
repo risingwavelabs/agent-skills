@@ -7,7 +7,7 @@ Compatible with Claude Code, GitHub Copilot, Cursor, Windsurf, Gemini CLI, and [
 ## Installation
 
 ```bash
-npx skills add risingwave/agent-skills
+npx skills add risingwavelabs/agent-skills
 ```
 
 The CLI auto-detects installed agents and prompts you to select where to install.
@@ -15,14 +15,14 @@ The CLI auto-detects installed agents and prompts you to select where to install
 ### Install a specific skill
 
 ```bash
-npx skills add risingwave/agent-skills --skill risingwave
-npx skills add risingwave/agent-skills --skill risingwave-best-practices
+npx skills add risingwavelabs/agent-skills --skill risingwave
+npx skills add risingwavelabs/agent-skills --skill risingwave-best-practices
 ```
 
 ### Claude Code Plugin
 
 ```bash
-claude plugin marketplace add risingwave/agent-skills
+claude plugin marketplace add risingwavelabs/agent-skills
 claude plugin install risingwave@risingwave-agent-skills
 claude plugin install risingwave-best-practices@risingwave-agent-skills
 ```

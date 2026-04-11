@@ -1,0 +1,24 @@
+{
+  "name": "risingwave-agent-skills",
+  "owner": { "name": "RisingWave Labs" },
+  "metadata": {
+    "description": "Official RisingWave agent skills for AI coding assistants",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "risingwave",
+      "description": "Core RisingWave skill: connections, MCP server setup, Source→MV→Sink pipeline, CDC, time windows, watermarks, system catalog",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/risingwave"]
+    },
+    {
+      "name": "risingwave-best-practices",
+      "description": "10 best-practice rules for RisingWave covering schema design, materialized views, CDC, sinks, and performance",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/risingwave-best-practices"]
+    }
+  ]
+}
