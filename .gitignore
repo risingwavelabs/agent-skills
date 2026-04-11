@@ -1,0 +1,27 @@
+.DS_Store
+node_modules/
+*.log
+dist/
+build/
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# AI Agent local directories (don't commit installed skills)
+.agent/
+.agents/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.goose/
+.kiro/
+.opencode/
+.windsurf/
+.trae/
+.*/skills/
