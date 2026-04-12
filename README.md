@@ -1,6 +1,38 @@
-# RisingWave Agent Skills
+<p align="center">
+  <picture>
+    <source srcset=".github/RisingWave-logo-dark.svg" width="400px" media="(prefers-color-scheme: dark)">
+    <img src=".github/RisingWave-logo-light.svg" width="400px">
+  </picture>
+</p>
 
-The official Agent Skills for [RisingWave](https://risingwave.com/) — the streaming SQL database. These skills help AI coding agents adopt best practices when building real-time pipelines, designing materialized views, configuring CDC ingestion, and optimizing streaming workloads.
+<div align="center">
+
+### Agent Skills for RisingWave
+
+</div>
+
+<p align="center">
+  <a href="https://docs.risingwave.com/">Docs</a> | <a href="#installation">Installation</a> | <a href="#available-skills">Skills</a> | <a href="CONTRIBUTING.md">Contributing</a>
+</p>
+
+<div align="center">
+  <a href="https://github.com/risingwavelabs/agent-skills/blob/main/LICENSE" target="_blank">
+    <img alt="License" src="https://img.shields.io/badge/license-Apache%202.0-blue" />
+  </a>
+  <a href="https://go.risingwave.com/slack" target="_blank">
+    <img alt="Slack" src="https://badgen.net/badge/Slack/Join%20RisingWave/0abd59?icon=slack" />
+  </a>
+  <a href="https://x.com/risingwavelabs" target="_blank">
+    <img alt="X" src="https://img.shields.io/twitter/follow/risingwavelabs" />
+  </a>
+  <a href="https://github.com/risingwavelabs/agent-skills/actions/workflows/validate.yml" target="_blank">
+    <img alt="Validate" src="https://github.com/risingwavelabs/agent-skills/actions/workflows/validate.yml/badge.svg" />
+  </a>
+</div>
+
+---
+
+Official Agent Skills for [RisingWave](https://risingwave.com/) — the streaming SQL database. These skills help AI coding agents adopt best practices when building real-time pipelines, designing materialized views, configuring CDC ingestion, and optimizing streaming workloads.
 
 Compatible with Claude Code, GitHub Copilot, Cursor, Windsurf, Gemini CLI, and [18+ other AI agents](#supported-agents).
 
@@ -37,7 +69,8 @@ Skills follow the open specification at [agentskills.io](https://agentskills.io)
 
 ## Available Skills
 
-### risingwave
+<details>
+<summary><strong>risingwave</strong></summary>
 
 Core skill covering connections, MCP server setup, and the fundamental pipeline pattern.
 
@@ -51,21 +84,20 @@ Core skill covering connections, MCP server setup, and the fundamental pipeline 
 - Using watermarks and `EMIT ON WINDOW CLOSE`
 - Querying the system catalog (`rw_catalog`)
 
-**Location:** [`skills/risingwave/`](./skills/risingwave/)
+</details>
 
----
+<details>
+<summary><strong>risingwave-best-practices</strong></summary>
 
-### risingwave-best-practices
-
-**10 rules** covering schema design, materialized view patterns, CDC setup, sink configuration, and performance — prioritized by impact.
+**14 rules** covering schema design, materialized view patterns, CDC setup, sink configuration, and performance — prioritized by impact.
 
 | Category | Rules | Impact |
 |----------|-------|--------|
 | Schema Design | 3 | CRITICAL / HIGH |
-| Materialized Views | 2 | CRITICAL / HIGH |
-| Streaming SQL | 2 | CRITICAL / HIGH |
+| Materialized Views | 3 | CRITICAL / HIGH |
+| Streaming SQL | 3 | CRITICAL / HIGH |
 | Sink Configuration | 2 | HIGH / MEDIUM |
-| Performance | 2 | HIGH / MEDIUM |
+| Performance | 3 | HIGH / MEDIUM |
 
 **Use when:**
 
@@ -75,7 +107,7 @@ Core skill covering connections, MCP server setup, and the fundamental pipeline 
 - Setting up sinks to Kafka, Iceberg, or other destinations
 - Debugging slow backfills or high-volume sink output
 
-**Location:** [`skills/risingwave-best-practices/`](./skills/risingwave-best-practices/)
+</details>
 
 ---
 

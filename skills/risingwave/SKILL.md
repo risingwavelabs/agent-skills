@@ -210,6 +210,30 @@ SET BACKGROUND_DDL = true;
 SET streaming_use_shared_source = true;
 ```
 
+## Troubleshooting
+
+**MCP server not connecting**
+- Verify `RISINGWAVE_CONNECTION_STR` is set and RisingWave is running on port 4566
+- Test the connection first: `psql -h localhost -p 4566 -d dev -U root`
+- Check Python version: `python --version` (requires Python 3.8+)
+
+**`EMIT ON WINDOW CLOSE` produces no output**
+- The source or table must have `WATERMARK FOR col AS col - INTERVAL '...'` defined
+- Confirm watermark is advancing: insert rows with recent timestamps, not historical data
+- Check MV definition: `SHOW CREATE MATERIALIZED VIEW my_mv`
+
+**MV creation hangs / session times out**
+- Use `SET BACKGROUND_DDL = true` before `CREATE MATERIALIZED VIEW`
+- Monitor progress: `SELECT ddl_id, ddl_statement, progress FROM rw_catalog.rw_ddl_progress`
+
+**CDC table not receiving updates**
+- Verify PostgreSQL has `wal_level = logical` and the replication user has `REPLICATION` role
+- Check CDC lag: `SELECT * FROM rw_catalog.rw_cdc_progress`
+- Ensure `slot.name` in `CREATE SOURCE` is unique and does not already exist on the upstream DB
+
+**Sink sending duplicate historical data**
+- Add `snapshot = false` to the sink `WITH` clause to skip backfilling existing MV data
+
 ## References
 
 - [Connectors reference](references/connectors.md) — all supported sources and sinks
