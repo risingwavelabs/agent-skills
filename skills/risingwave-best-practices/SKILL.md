@@ -4,7 +4,7 @@ description: Use when designing RisingWave schemas, writing materialized views, 
 license: Apache-2.0
 metadata:
   author: RisingWave Labs
-  version: "0.2.0"
+  version: "0.3.0"
   organization: RisingWave Labs
   date: April 2026
   abstract: >

@@ -4,7 +4,7 @@ description: Use when working with RisingWave — streaming SQL database, materi
 license: Apache-2.0
 metadata:
   author: RisingWave Labs
-  version: "0.2.0"
+  version: "0.3.0"
   organization: RisingWave Labs
   date: April 2026
   abstract: >
@@ -22,7 +22,7 @@ The core pipeline is: **Source** (ingest) → **Materialized View** (continuous 
 
 1. **Port 4566, not 5432** — RisingWave listens on `4566` for SQL connections. Dashboard is at `5691`.
 2. **SOURCE ≠ TABLE** — `CREATE SOURCE` connects a stream but doesn't persist data. `CREATE TABLE` persists. For CDC (Debezium, Maxwell, Canal), you MUST use `CREATE TABLE ... FROM source`.
-3. **Watermarks unlock window closing** — Without `WATERMARK FOR col AS col - INTERVAL '...'`, `EMIT ON WINDOW CLOSE` won't work; use it on the source or table definition.
+3. **Watermarks unlock window closing** — Without `WATERMARK FOR col AS col - INTERVAL '...'`, `EMIT ON WINDOW CLOSE` won't work; use it on the source or table definition. In RisingWave 2.8+, watermarks on `TABLE` require `APPEND ONLY` — use `CREATE SOURCE` for non-append-only streams that need watermarks.
 4. **`EMIT ON WINDOW CLOSE` vs default** — Default emit-on-update sends partial results after each checkpoint. Use `EMIT ON WINDOW CLOSE` for final, immutable window results.
 5. **Large backfills need `BACKGROUND_DDL`** — Creating an MV over a large table blocks without `SET BACKGROUND_DDL = true`. Monitor with `SELECT * FROM rw_catalog.rw_ddl_progress`.
 6. **`snapshot = false` on sinks** — Adding a sink to an existing MV without this flag replays all historical data into the sink.

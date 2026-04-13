@@ -57,7 +57,8 @@ SELECT * FROM customer_stats WHERE customer_id = 12345;
 **Verify index usage:**
 ```sql
 EXPLAIN SELECT * FROM customer_stats WHERE customer_id = 12345;
--- Look for "IndexScan" instead of "SequentialScan"
+-- Look for scan_ranges: [customer_id = ...] in the output — indicates index lookup
+-- Without index: BatchScan with no scan_ranges (full table scan)
 ```
 
 Reference: [CREATE INDEX](https://docs.risingwave.com/sql/commands/sql-create-index)

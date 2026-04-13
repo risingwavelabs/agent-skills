@@ -9,7 +9,7 @@
 | `rw_sources` | `id, name, schema_id, owner, connector, columns, format` | All sources |
 | `rw_sinks` | `id, name, schema_id, owner, connector, sink_type, connection_id, definition` | All sinks |
 | `rw_views` | `id, name, definition` | Non-materialized views |
-| `rw_indexes` | `id, name, primary_table_id, index_table_id` | Index definitions |
+| `rw_indexes` | `id, name, primary_table_id, key_columns, include_columns` | Index definitions |
 | `rw_schemas` | `id, name, owner` | Schema catalog |
 | `rw_databases` | `id, name, owner` | Database catalog |
 | `rw_columns` | `relation_id, name, position, is_nullable, data_type` | Column-level info |
@@ -20,11 +20,11 @@
 | Table | Key Columns | Purpose |
 |-------|------------|---------|
 | `rw_streaming_jobs` | `id, name, parallelism, max_parallelism` | Active streaming jobs |
-| `rw_fragments` | `fragment_id, job_id, fragment_type, distribution_type` | Fragment distribution |
-| `rw_actors` | `actor_id, fragment_id, worker_node` | Parallelism unit details |
+| `rw_fragments` | `fragment_id, table_id, distribution_type` | Fragment distribution |
+| `rw_actors` | `actor_id, fragment_id, worker_id` | Parallelism unit details |
 | `rw_worker_nodes` | `id, host, type, state` | Cluster node status |
 | `rw_ddl_progress` | `ddl_id, ddl_statement, progress` | DDL backfill progress |
-| `rw_fragment_backfill_progress` | `fragment_id, upstream_mv_count, finished_mv_count` | Per-fragment backfill |
+| `rw_fragment_backfill_progress` | `job_id, fragment_id, job_name, upstream_table_name, progress` | Per-fragment backfill |
 | `rw_cdc_progress` | `job_id, split_total_count, split_backfilled_count, split_completed_count` | CDC backfill progress |
 
 ## Storage (Hummock)
@@ -69,7 +69,7 @@ SELECT name, parallelism, max_parallelism
 FROM rw_catalog.rw_streaming_jobs;
 
 -- Fragment distribution across worker nodes
-SELECT f.fragment_id, f.job_id, a.worker_node
+SELECT f.fragment_id, f.table_id, a.worker_id
 FROM rw_catalog.rw_fragments f
 JOIN rw_catalog.rw_actors a USING (fragment_id);
 

@@ -9,6 +9,8 @@ tags: schema, watermark, event-time, emit-on-window-close, time-window, source, 
 
 Watermarks declare how far behind event-time can lag before data is considered late. They must be defined on `CREATE SOURCE` or `CREATE TABLE` — the ingestion point — not inside `CREATE MATERIALIZED VIEW`. Watermarks propagate downstream to all MVs that read the source. Without a watermark, `EMIT ON WINDOW CLOSE` produces no output.
 
+**Note:** In RisingWave 2.8+, `WATERMARK` on a `TABLE` requires the table to be `APPEND ONLY`. For mutable tables (CDC, upsert), define the watermark on a `CREATE SOURCE` instead.
+
 **Incorrect (watermark in MV):**
 ```sql
 -- Bad: watermarks cannot be defined inside a materialized view
