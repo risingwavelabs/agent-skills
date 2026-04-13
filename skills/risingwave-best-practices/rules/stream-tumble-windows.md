@@ -39,7 +39,7 @@ EMIT ON WINDOW CLOSE;
 |----------|---------|----------|
 | `TUMBLE(t, col, size)` | `TUMBLE(events, ts, INTERVAL '5 MIN')` | Non-overlapping fixed windows |
 | `HOP(t, col, hop, size)` | `HOP(events, ts, INTERVAL '1 MIN', INTERVAL '5 MIN')` | Sliding windows; each row appears in `size/hop` windows |
-| `SESSION(col, gap)` | `GROUP BY SESSION(ts, INTERVAL '30 MIN')` | Event-gap based grouping |
+| `SESSION(col, gap)` | batch mode only (not supported in streaming in 2.x) | Event-gap based grouping |
 
 **Always include `window_start` and `window_end` in GROUP BY** — these are the window identity columns.
 

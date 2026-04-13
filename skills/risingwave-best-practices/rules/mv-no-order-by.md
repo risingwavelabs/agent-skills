@@ -7,16 +7,16 @@ tags: materialized-view, order-by, ordering, streaming, serving
 
 ## Do not rely on ORDER BY in materialized views for ongoing ordering
 
-`ORDER BY` in a `CREATE MATERIALIZED VIEW` statement is applied only to the initial snapshot at creation time. As new data streams in and the MV is incrementally updated, results are not re-sorted. Downstream consumers that assume the MV is always ordered will see unordered data.
+`ORDER BY` in a `CREATE MATERIALIZED VIEW` statement affects the physical storage clustering of the MV — RisingWave will issue a NOTICE: "ORDER BY on creating materialized view is not supported by streaming mode." It does **not** guarantee that query results will be returned in that order. Downstream consumers relying on it will see unordered data.
 
-**Incorrect (ORDER BY in MV — ordering not maintained for streaming updates):**
+**Incorrect (ORDER BY in MV — no ordering guarantee on query results):**
 ```sql
--- Bad: ORDER BY only applies to the initial snapshot
+-- Bad: RisingWave issues a NOTICE and ORDER BY only influences storage layout, not result order
 CREATE MATERIALIZED VIEW recent_orders AS
 SELECT order_id, customer_id, total, created_at
 FROM orders
 ORDER BY created_at DESC;
--- After backfill, new rows are appended without re-sorting
+-- Querying recent_orders returns rows in arbitrary order
 ```
 
 **Correct (order at query time or use a sink):**

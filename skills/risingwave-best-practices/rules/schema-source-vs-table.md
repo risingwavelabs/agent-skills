@@ -44,7 +44,7 @@ CREATE SOURCE pg_cdc WITH (
 CREATE TABLE orders (
     id          INT PRIMARY KEY,
     customer_id INT,
-    total       DECIMAL(10, 2),
+    total       DECIMAL,
     status      VARCHAR
 )
 FROM pg_cdc TABLE 'public.orders';

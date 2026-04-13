@@ -18,12 +18,12 @@ FROM high_volume_events
 GROUP BY event_type;
 ```
 
-**Correct (explicit parallelism):**
+**Correct (explicit parallelism via session variable):**
 ```sql
--- Good: 16-way parallelism distributes load across available cores/nodes
-CREATE MATERIALIZED VIEW high_volume_stats
-WITH (parallelism = 16)
-AS
+-- Good: set parallelism before CREATE, applies to the next DDL statement
+SET streaming_parallelism = 16;
+
+CREATE MATERIALIZED VIEW high_volume_stats AS
 SELECT event_type, COUNT(*) AS cnt
 FROM high_volume_events
 GROUP BY event_type;

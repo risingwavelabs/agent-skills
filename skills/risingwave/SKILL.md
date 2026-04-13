@@ -62,7 +62,7 @@ cd risingwave-mcp && pip install -r requirements.txt
 
 Configure via environment variable:
 ```
-RISINGWAVE_CONNECTION_STR=postgresql://root:root@localhost:4566/dev
+RISINGWAVE_CONNECTION_STR=postgresql://root:@localhost:4566/dev
 ```
 
 Add to your agent's MCP config (Claude Code: `~/.claude/claude_desktop_config.json`, VS Code: `.vscode/mcp.json`):
@@ -161,7 +161,7 @@ CREATE SOURCE pg_cdc WITH (
 CREATE TABLE orders (
     id          INT PRIMARY KEY,
     customer_id INT,
-    total       DECIMAL(10, 2),
+    total       DECIMAL,
     created_at  TIMESTAMP
 )
 FROM pg_cdc TABLE 'public.orders';
@@ -179,9 +179,9 @@ FROM TUMBLE(table, time_col, INTERVAL '5 MINUTES')
 -- hop_size = slide interval, window_size = total duration
 FROM HOP(table, time_col, INTERVAL '1 MINUTE', INTERVAL '5 MINUTES')
 
--- SESSION: gap-based grouping
-GROUP BY user_id, SESSION(event_time, INTERVAL '30 MINUTES')
 ```
+
+> **Note:** SESSION windows are only supported in batch mode in RisingWave 2.x. For streaming, use TUMBLE or HOP.
 
 **Pattern:** Always group by `window_start, window_end` and add `EMIT ON WINDOW CLOSE` when using watermarks.
 
@@ -197,14 +197,12 @@ SELECT ddl_id, ddl_statement, progress FROM rw_catalog.rw_ddl_progress;
 -- Active sources and their connectors
 SELECT name, connector FROM rw_catalog.rw_sources;
 
--- Sink status
-SELECT name, sink_type, status FROM rw_catalog.rw_sinks;
+-- Sink info
+SELECT name, sink_type, connector FROM rw_catalog.rw_sinks;
 
--- Kafka consumer lag
-SELECT * FROM rw_catalog.rw_kafka_job_lag;
-
--- CDC replication lag
-SELECT * FROM rw_catalog.rw_cdc_progress;
+-- CDC backfill progress
+SELECT job_id, split_total_count, split_backfilled_count, split_completed_count
+FROM rw_catalog.rw_cdc_progress;
 
 -- Cluster nodes
 SELECT id, host, type, state FROM rw_catalog.rw_worker_nodes;

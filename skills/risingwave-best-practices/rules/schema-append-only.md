@@ -7,6 +7,8 @@ tags: schema, append-only, table, performance, immutable, events
 
 ## Declare APPEND ONLY for immutable event streams
 
+> **Note:** `APPEND ONLY` is currently an experimental feature. RisingWave will issue a NOTICE when you use it. It is functional but the interface may change in future versions.
+
 RisingWave tables default to supporting updates and deletes, which requires tracking row versions and maintaining tombstones in storage. For immutable event data (logs, transactions, sensor readings), declaring `APPEND ONLY` allows RisingWave to skip this overhead, improving throughput and reducing storage.
 
 **Incorrect (mutable table for append-only data):**

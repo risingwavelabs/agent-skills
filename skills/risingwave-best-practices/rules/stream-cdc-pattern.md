@@ -45,7 +45,7 @@ CREATE SOURCE pg_mydb WITH (
 CREATE TABLE orders (
     id          INT PRIMARY KEY,
     customer_id INT,
-    total       DECIMAL(10, 2),
+    total       DECIMAL,
     status      VARCHAR,
     updated_at  TIMESTAMP
 )
@@ -68,9 +68,9 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO replicator;
 SELECT pg_reload_conf();
 ```
 
-**Monitor CDC progress:**
+**Monitor CDC backfill progress:**
 ```sql
-SELECT source_name, progress
+SELECT job_id, split_total_count, split_backfilled_count, split_completed_count
 FROM rw_catalog.rw_cdc_progress;
 ```
 

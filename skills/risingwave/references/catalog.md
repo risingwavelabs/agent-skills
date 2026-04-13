@@ -7,7 +7,7 @@
 | `rw_tables` | `id, name, schema_id, owner, definition, append_only, created_at` | All tables |
 | `rw_materialized_views` | `id, name, schema_id, owner, definition, append_only` | All MVs |
 | `rw_sources` | `id, name, schema_id, owner, connector, columns, format` | All sources |
-| `rw_sinks` | `id, name, sink_type, connection_params, status` | All sinks |
+| `rw_sinks` | `id, name, schema_id, owner, connector, sink_type, connection_id, definition` | All sinks |
 | `rw_views` | `id, name, definition` | Non-materialized views |
 | `rw_indexes` | `id, name, primary_table_id, index_table_id` | Index definitions |
 | `rw_schemas` | `id, name, owner` | Schema catalog |
@@ -25,8 +25,7 @@
 | `rw_worker_nodes` | `id, host, type, state` | Cluster node status |
 | `rw_ddl_progress` | `ddl_id, ddl_statement, progress` | DDL backfill progress |
 | `rw_fragment_backfill_progress` | `fragment_id, upstream_mv_count, finished_mv_count` | Per-fragment backfill |
-| `rw_cdc_progress` | `source_id, source_name, progress` | CDC replication lag |
-| `rw_kafka_job_lag` | `source_id, topic, partition, consumer_lag` | Kafka consumer lag |
+| `rw_cdc_progress` | `job_id, split_total_count, split_backfilled_count, split_completed_count` | CDC backfill progress |
 
 ## Storage (Hummock)
 
@@ -61,13 +60,8 @@
 SELECT ddl_id, ddl_statement, progress
 FROM rw_catalog.rw_ddl_progress;
 
--- Kafka consumer lag per partition
-SELECT source_id, topic, partition, consumer_lag
-FROM rw_catalog.rw_kafka_job_lag
-ORDER BY consumer_lag DESC;
-
--- CDC replication progress
-SELECT source_name, progress
+-- CDC backfill progress
+SELECT job_id, split_total_count, split_backfilled_count, split_completed_count
 FROM rw_catalog.rw_cdc_progress;
 
 -- All streaming jobs with parallelism

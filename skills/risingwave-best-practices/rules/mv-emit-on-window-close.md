@@ -7,6 +7,8 @@ tags: materialized-view, emit-on-window-close, watermark, tumble, hop, time-wind
 
 ## Use EMIT ON WINDOW CLOSE for windowed aggregations
 
+> **Note:** `EMIT ON WINDOW CLOSE` is currently an experimental feature. RisingWave will issue a NOTICE when you use it. It is functional but the interface may change in future versions.
+
 By default, RisingWave emits result updates after every checkpoint barrier (typically every 1 second). For a windowed aggregation like `TUMBLE(... INTERVAL '1 HOUR')`, this means a single 1-hour window emits thousands of intermediate partial results. `EMIT ON WINDOW CLOSE` (EOWC) buffers results until the watermark passes the window end, then emits exactly one final, immutable result.
 
 EOWC requires a watermark on the input source or table.
