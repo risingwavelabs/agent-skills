@@ -25,7 +25,7 @@ WITH (
     hostname = 'pg',
     ...
 )
-FORMAT DEBEZIUM ENCODE JSON;  -- ERROR or silent data loss
+FORMAT DEBEZIUM ENCODE JSON;  -- ERROR: "CDC source cannot define columns and constraints"
 ```
 
 **Correct (two-step CDC):**

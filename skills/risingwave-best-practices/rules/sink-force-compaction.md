@@ -17,7 +17,8 @@ RisingWave processes streaming changes in barrier intervals (typically 1 second)
 CREATE SINK user_stats_redis FROM user_stats_mv
 WITH (
     connector = 'redis',
-    redis.url = 'redis://localhost:6379'
+    redis.url = 'redis://localhost:6379',
+    primary_key = 'user_id'
 )
 FORMAT UPSERT ENCODE JSON;
 -- Redis receives: {user_id:123, score:1}, {user_id:123, score:2}, ..., {user_id:123, score:50}
@@ -31,6 +32,7 @@ CREATE SINK user_stats_redis FROM user_stats_mv
 WITH (
     connector = 'redis',
     redis.url = 'redis://localhost:6379',
+    primary_key = 'user_id',
     force_compaction = true
 )
 FORMAT UPSERT ENCODE JSON;

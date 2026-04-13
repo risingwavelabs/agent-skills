@@ -4,7 +4,7 @@ description: Use when working with RisingWave — streaming SQL database, materi
 license: Apache-2.0
 metadata:
   author: RisingWave Labs
-  version: "0.3.0"
+  version: "0.3.1"
   organization: RisingWave Labs
   date: April 2026
   abstract: >

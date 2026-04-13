@@ -24,7 +24,8 @@ WITH (
     database.name = 'mydb'
 )
 FORMAT DEBEZIUM ENCODE JSON;
--- This fails: CDC connectors require CREATE TABLE, not CREATE SOURCE
+-- This fails: "CDC source cannot define columns and constraints"
+-- CDC sources are connection-only; column definitions must go in CREATE TABLE
 ```
 
 **Correct (two-step CDC with TABLE):**

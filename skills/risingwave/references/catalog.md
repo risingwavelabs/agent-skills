@@ -12,7 +12,7 @@
 | `rw_indexes` | `id, name, primary_table_id, key_columns, include_columns` | Index definitions |
 | `rw_schemas` | `id, name, owner` | Schema catalog |
 | `rw_databases` | `id, name, owner` | Database catalog |
-| `rw_columns` | `relation_id, name, position, is_nullable, data_type` | Column-level info |
+| `rw_columns` | `relation_id, name, "position", is_nullable, data_type` | Column-level info (`position` is a reserved keyword — quote it in queries) |
 | `rw_relations` | Union of all relation types | |
 
 ## Streaming Operations
