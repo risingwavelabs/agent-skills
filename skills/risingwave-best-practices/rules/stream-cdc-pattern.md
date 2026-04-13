@@ -36,7 +36,7 @@ CREATE SOURCE pg_mydb WITH (
     hostname = 'postgres-host',
     port = '5432',
     username = 'replicator',  -- must have REPLICATION role
-    password = 'secret',
+    password = '<your-password>',
     database.name = 'mydb',
     slot.name = 'rw_cdc_slot'  -- unique replication slot name
 );

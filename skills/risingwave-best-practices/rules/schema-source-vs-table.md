@@ -20,7 +20,7 @@ WITH (
     hostname = 'pg-host',
     port = '5432',
     username = 'repl',
-    password = 'secret',
+    password = '<your-password>',
     database.name = 'mydb'
 )
 FORMAT DEBEZIUM ENCODE JSON;
@@ -35,7 +35,7 @@ CREATE SOURCE pg_cdc WITH (
     hostname = 'pg-host',
     port = '5432',
     username = 'repl',
-    password = 'secret',
+    password = '<your-password>',
     database.name = 'mydb',
     slot.name = 'rw_slot'
 );

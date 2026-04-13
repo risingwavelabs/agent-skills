@@ -4,7 +4,7 @@ description: Use when working with RisingWave — streaming SQL database, materi
 license: Apache-2.0
 metadata:
   author: RisingWave Labs
-  version: "0.1.0"
+  version: "0.2.0"
   organization: RisingWave Labs
   date: April 2026
   abstract: >
@@ -65,7 +65,22 @@ Configure via environment variable:
 RISINGWAVE_CONNECTION_STR=postgresql://root:root@localhost:4566/dev
 ```
 
-See `.mcp.json` in this skill's root directory for agent configuration.
+Add to your agent's MCP config (Claude Code: `~/.claude/claude_desktop_config.json`, VS Code: `.vscode/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "risingwave": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["/path/to/risingwave-mcp/src/main.py"],
+      "env": {
+        "RISINGWAVE_CONNECTION_STR": "postgresql://root:@localhost:4566/dev"
+      }
+    }
+  }
+}
+```
 
 ## The Pipeline Pattern
 
@@ -137,7 +152,7 @@ CREATE SOURCE pg_cdc WITH (
     hostname = 'postgres-host',
     port = '5432',
     username = 'replicator',
-    password = 'secret',
+    password = '<your-password>',
     database.name = 'mydb',
     slot.name = 'rw_slot'
 );
